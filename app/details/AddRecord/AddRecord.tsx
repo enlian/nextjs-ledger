@@ -55,12 +55,17 @@ function getDays() {
 const AddRecord = ({ isOpen, onClose, onRecordSubmit }: Props) => {
   const [daysArray, setDaysArray] = useState<Months[]>([]);
   const [isDateModalOpen, setDateModalOpen] = useState(false);
+  const [recordType, setRecordType] = useState("支出");
   const currentRef = useRef<HTMLDivElement | null>(null);
   const [selectedDate, setSelectedDate] = useState({
     year: moment().year(),
     month: moment().month(),
     day: moment().date(),
   });
+
+  const typeClick = (type: string) => () => {
+    setRecordType(type);
+  };
 
   const dateSelect = (year: number, month: number, day: number) => () => {
     setSelectedDate({
@@ -152,14 +157,28 @@ const AddRecord = ({ isOpen, onClose, onRecordSubmit }: Props) => {
             <div className={styles.addRecord}>
               <div className={styles.typeBox}>
                 <div className={styles.typeBoxL}>
-                  <div className={`${styles.type} ${styles.selected}`}>
+                  <div
+                    className={`${styles.type} ${
+                      recordType === "支出" ? styles.selected : null
+                    }`}
+                    onClick={typeClick("支出")}
+                  >
                     支出
                   </div>
-                  <div className={styles.type}>收入</div>
+                  <div
+                    className={`${styles.type} ${
+                      recordType === "收入" ? styles.selected : null
+                    }`}
+                    onClick={typeClick("收入")}
+                  >
+                    收入
+                  </div>
                 </div>
 
                 <div className={styles.date} onClick={showDatePicker}>
-                  <span>{selectedDate.month+1}月{selectedDate.day}日</span>
+                  <span>
+                    {selectedDate.month + 1}月{selectedDate.day}日
+                  </span>
                   <FaCaretDown size={16} color="#999" />
                 </div>
               </div>

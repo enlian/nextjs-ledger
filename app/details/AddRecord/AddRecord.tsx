@@ -68,6 +68,7 @@ const AddRecord = ({ isOpen, onClose, onRecordSubmit }: Props) => {
       month: month - 1,
       day,
     });
+    setDateModalOpen(false);
   };
 
   const showDatePicker = () => {

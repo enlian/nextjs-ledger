@@ -159,7 +159,7 @@ const AddRecord = ({ isOpen, onClose, onRecordSubmit }: Props) => {
                 </div>
 
                 <div className={styles.date} onClick={showDatePicker}>
-                  <span>11月20日</span>
+                  <span>{selectedDate.month+1}月{selectedDate.day}日</span>
                   <FaCaretDown size={16} color="#999" />
                 </div>
               </div>

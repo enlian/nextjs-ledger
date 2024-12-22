@@ -32,7 +32,7 @@
     padding-bottom: 10px;
   }
 }
-.addRecord{
+.addRecord {
   padding: 20px 20px 20px 20px;
 }
 .yearTitle {
@@ -134,6 +134,17 @@
   div:hover {
     div {
       background-color: rgb(230, 230, 230);
+    }
+    span {
+      color: rgb(57, 57, 57);
+    }
+  }
+  div.tagSelected {
+    div {
+      background-color: var(--main-color);
+      svg {
+        color: white;
+      }
     }
     span {
       color: rgb(57, 57, 57);

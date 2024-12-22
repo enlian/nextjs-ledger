@@ -62,6 +62,11 @@ const AddRecord = ({ isOpen, onClose, onRecordSubmit }: Props) => {
     month: moment().month(),
     day: moment().date(),
   });
+  const [currentTag, setCurrentType] = useState("餐饮");
+
+  const tagClick = (type: string) => () => {
+    setCurrentType(type);
+  };
 
   const typeClick = (type: string) => () => {
     setRecordType(type);
@@ -187,37 +192,62 @@ const AddRecord = ({ isOpen, onClose, onRecordSubmit }: Props) => {
                 <input type="number" className={styles.moneyInput} />
               </div>
               <div className={styles.tags}>
-                <div>
+                <div
+                  onClick={tagClick("餐饮")}
+                  className={`${
+                    currentTag === "餐饮" ? styles.tagSelected : null
+                  }`}
+                >
                   <div>
                     <MdFastfood size={30} />
                   </div>
                   <span>餐饮</span>
                 </div>
-                <div>
+                <div
+                  onClick={tagClick("交通")}
+                  className={`${
+                    currentTag === "交通" ? styles.tagSelected : null
+                  }`}>
                   <div>
                     <FaCar size={30} />
                   </div>
                   <span>交通</span>
                 </div>
-                <div>
+                <div
+                  onClick={tagClick("服饰")}
+                  className={`${
+                    currentTag === "服饰" ? styles.tagSelected : null
+                  }`}>
                   <div>
                     <GiClothes size={30} />
                   </div>
                   <span>服饰</span>
                 </div>
-                <div>
+                <div
+                  onClick={tagClick("购物")}
+                  className={`${
+                    currentTag === "购物" ? styles.tagSelected : null
+                  }`}>
                   <div>
                     <FaShoppingCart size={30} />
                   </div>
                   <span>购物</span>
                 </div>
-                <div>
+                <div
+                  onClick={tagClick("生活")}
+                  className={`${
+                    currentTag === "生活" ? styles.tagSelected : null
+                  }`}>
                   <div>
                     <MdNightlife size={30} />
                   </div>
                   <span>生活</span>
                 </div>
-                <div>
+                <div
+                  onClick={tagClick("教育")}
+                  className={`${
+                    currentTag === "教育" ? styles.tagSelected : null
+                  }`}>
                   <div>
                     <IoMdSchool size={30} />
                   </div>

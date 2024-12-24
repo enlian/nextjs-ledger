@@ -70,7 +70,7 @@ const AddRecord = ({ isOpen, onClose, onRecordSubmit }: Props) => {
       selectedDate.year === moment().year() &&
       selectedDate.month === moment().month() &&
       selectedDate.day === moment().date();
-    
+
     const res = await fetch("/api/addRecord", {
       method: "POST",
       headers: {
@@ -87,7 +87,11 @@ const AddRecord = ({ isOpen, onClose, onRecordSubmit }: Props) => {
   };
 
   const handleMoneyChange = (e: { target: { value: any } }) => {
-    setMoney(e.target.value);
+    let value = e.target.value;
+    if (value.startsWith("0") && value.length > 1) {
+      value = value.replace(/^0+/, "");
+    }
+    setMoney(value);
   };
 
   const tagClick = (type: string) => () => {

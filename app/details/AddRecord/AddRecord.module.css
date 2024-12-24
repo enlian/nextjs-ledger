@@ -123,6 +123,13 @@
     height: 30px;
     border: none;
     border-bottom: 1px solid rgb(225, 225, 225);
+    font-size: larger;
+    color: #666;
+  }
+  input:focus{
+    border: none;
+    outline: none;
+    border-bottom: 1px solid rgb(225, 225, 225);
   }
 }
 .tags {

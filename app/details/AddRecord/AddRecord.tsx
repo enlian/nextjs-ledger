@@ -64,6 +64,8 @@ const AddRecord = ({ isOpen, onClose, onRecordSubmit }: Props) => {
   });
   const [currentTag, setCurrentType] = useState("餐饮");
 
+  const onSubmit = () => {};
+
   const tagClick = (type: string) => () => {
     setCurrentType(type);
   };
@@ -207,7 +209,8 @@ const AddRecord = ({ isOpen, onClose, onRecordSubmit }: Props) => {
                   onClick={tagClick("交通")}
                   className={`${
                     currentTag === "交通" ? styles.tagSelected : null
-                  }`}>
+                  }`}
+                >
                   <div>
                     <FaCar size={30} />
                   </div>
@@ -217,7 +220,8 @@ const AddRecord = ({ isOpen, onClose, onRecordSubmit }: Props) => {
                   onClick={tagClick("服饰")}
                   className={`${
                     currentTag === "服饰" ? styles.tagSelected : null
-                  }`}>
+                  }`}
+                >
                   <div>
                     <GiClothes size={30} />
                   </div>
@@ -227,7 +231,8 @@ const AddRecord = ({ isOpen, onClose, onRecordSubmit }: Props) => {
                   onClick={tagClick("购物")}
                   className={`${
                     currentTag === "购物" ? styles.tagSelected : null
-                  }`}>
+                  }`}
+                >
                   <div>
                     <FaShoppingCart size={30} />
                   </div>
@@ -237,7 +242,8 @@ const AddRecord = ({ isOpen, onClose, onRecordSubmit }: Props) => {
                   onClick={tagClick("生活")}
                   className={`${
                     currentTag === "生活" ? styles.tagSelected : null
-                  }`}>
+                  }`}
+                >
                   <div>
                     <MdNightlife size={30} />
                   </div>
@@ -247,11 +253,21 @@ const AddRecord = ({ isOpen, onClose, onRecordSubmit }: Props) => {
                   onClick={tagClick("教育")}
                   className={`${
                     currentTag === "教育" ? styles.tagSelected : null
-                  }`}>
+                  }`}
+                >
                   <div>
                     <IoMdSchool size={30} />
                   </div>
                   <span>教育</span>
+                </div>
+              </div>
+
+              <div className={styles.btnGroup}>
+                <div className={styles.btnOK} onClick={onSubmit}>
+                  提交
+                </div>
+                <div className={styles.btnCancel} onClick={onClose}>
+                  取消
                 </div>
               </div>
             </div>

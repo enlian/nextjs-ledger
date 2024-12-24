@@ -33,7 +33,7 @@
   }
 }
 .addRecord {
-  padding: 20px 20px 20px 20px;
+  padding: 20px 20px 5px 20px;
 }
 .yearTitle {
   text-align: center;
@@ -174,5 +174,26 @@
       color: rgb(162, 162, 162);
       font-size: small;
     }
+  }
+}
+.btnGroup{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  div{
+    background-color: #efefef;
+    padding: 0 15px 0 15px;
+    margin: 0 20px 0 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: small;
+    height: 30px;
+    line-height: 30px;
+  }
+  .btnOK{
+    background: var(--main-color);
+    color: #fff;
   }
 }

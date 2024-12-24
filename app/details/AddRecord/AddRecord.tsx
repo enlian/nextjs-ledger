@@ -56,14 +56,21 @@ const AddRecord = ({ isOpen, onClose, onRecordSubmit }: Props) => {
   const [isDateModalOpen, setDateModalOpen] = useState(false);
   const [recordType, setRecordType] = useState("支出");
   const currentRef = useRef<HTMLDivElement | null>(null);
+  const [currentTag, setCurrentType] = useState("餐饮");
+  const [money, setMoney] = useState(0);
   const [selectedDate, setSelectedDate] = useState({
     year: moment().year(),
     month: moment().month(),
     day: moment().date(),
   });
-  const [currentTag, setCurrentType] = useState("餐饮");
 
   const onSubmit = async () => {
+    //是否是今天
+    const isToday =
+      selectedDate.year === moment().year() &&
+      selectedDate.month === moment().month() &&
+      selectedDate.day === moment().date();
+    
     const res = await fetch("/api/addRecord", {
       method: "POST",
       headers: {
@@ -72,12 +79,15 @@ const AddRecord = ({ isOpen, onClose, onRecordSubmit }: Props) => {
       body: JSON.stringify({
         type: recordType,
         tag: currentTag,
-        date: moment(selectedDate).unix(),
-        mount: 100,
+        date: isToday ? moment().unix() : moment(selectedDate).unix(),
+        money: money,
       }),
     });
+    const result = await res.json();
+  };
 
-    const result = await res.json();    
+  const handleMoneyChange = (e: { target: { value: any } }) => {
+    setMoney(e.target.value);
   };
 
   const tagClick = (type: string) => () => {
@@ -205,7 +215,12 @@ const AddRecord = ({ isOpen, onClose, onRecordSubmit }: Props) => {
               </div>
               <div className={styles.moneyInputGroup}>
                 <MdAttachMoney size={30} />
-                <input type="number" className={styles.moneyInput} />
+                <input
+                  type="number"
+                  className={styles.moneyInput}
+                  value={money}
+                  onChange={handleMoneyChange}
+                />
               </div>
               <div className={styles.tags}>
                 <div

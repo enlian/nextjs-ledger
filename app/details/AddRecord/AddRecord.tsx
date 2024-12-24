@@ -48,7 +48,6 @@ function getDays() {
       arrs.push(monthData);
     }
   }
-  console.log(arrs);
   return arrs;
 }
 
@@ -64,7 +63,22 @@ const AddRecord = ({ isOpen, onClose, onRecordSubmit }: Props) => {
   });
   const [currentTag, setCurrentType] = useState("餐饮");
 
-  const onSubmit = () => {};
+  const onSubmit = async () => {
+    const res = await fetch("/api/addRecord", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        type: recordType,
+        tag: currentTag,
+        date: moment(selectedDate).unix(),
+        mount: 100,
+      }),
+    });
+
+    const result = await res.json();    
+  };
 
   const tagClick = (type: string) => () => {
     setCurrentType(type);

@@ -71,7 +71,7 @@ const AddRecord = ({ isOpen, onClose, onRecordSubmit }: Props) => {
       selectedDate.month === moment().month() &&
       selectedDate.day === moment().date();
 
-    const res = await fetch("/api/addRecord", {
+    fetch("/api/addRecord", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -82,8 +82,18 @@ const AddRecord = ({ isOpen, onClose, onRecordSubmit }: Props) => {
         date: isToday ? moment().unix() : moment(selectedDate).unix(),
         money: money,
       }),
-    });
-    const result = await res.json();
+    })
+      .then(async (res) => {
+        if (res.ok) {
+          alert("记录添加成功");
+          onClose();
+        } else {
+          alert("记录添加失败");
+        }
+      })
+      .catch((error) => {
+        alert("记录添加失败:" + error);
+      });
   };
 
   const handleMoneyChange = (e: { target: { value: any } }) => {

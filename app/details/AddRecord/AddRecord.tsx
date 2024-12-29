@@ -92,7 +92,7 @@ const AddRecord = ({ isOpen, onClose, onRecordSubmit }: Props) => {
         if (res.ok) {
           onClose();
           onRecordSubmit("success");
-          setMoney("")
+          setMoney("");
         } else {
           onRecordSubmit("failed");
         }
@@ -106,6 +106,9 @@ const AddRecord = ({ isOpen, onClose, onRecordSubmit }: Props) => {
     let value = e.target.value;
     if (value.startsWith("0") && value.length > 1) {
       value = value.replace(/^0+/, "");
+    }
+    if (value.length > 6) {
+      value = value.slice(0, 6);
     }
     setMoney(value);
   };

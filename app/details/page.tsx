@@ -103,10 +103,12 @@ export default function name() {
         onRecordSubmit={onRecordSubmit}
       />
 
-      <div className={styles.add} onClick={openAddRecordModal}>
-        <FaRegEdit size={20} />
-        <span>记一笔</span>
-      </div>
+      {!isTimePickerModalOpen && !isAddRecordModalOpen && (
+        <div className={styles.add} onClick={openAddRecordModal}>
+          <FaRegEdit size={20} />
+          <span>记一笔</span>
+        </div>
+      )}
     </div>
   );
 }

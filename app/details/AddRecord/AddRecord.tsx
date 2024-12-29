@@ -12,7 +12,7 @@ import { IoChevronBack } from "react-icons/io5";
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  onRecordSubmit: (msg:string) => void;
+  onRecordSubmit: (msg: string) => void;
 }
 
 interface Months {
@@ -57,7 +57,7 @@ const AddRecord = ({ isOpen, onClose, onRecordSubmit }: Props) => {
   const [recordType, setRecordType] = useState("支出");
   const currentRef = useRef<HTMLDivElement | null>(null);
   const [currentTag, setCurrentType] = useState("餐饮");
-  const [money, setMoney] = useState(0);
+  const [money, setMoney] = useState<number | string>("");
   const [selectedDate, setSelectedDate] = useState({
     year: moment().year(),
     month: moment().month(),
@@ -70,6 +70,11 @@ const AddRecord = ({ isOpen, onClose, onRecordSubmit }: Props) => {
       selectedDate.year === moment().year() &&
       selectedDate.month === moment().month() &&
       selectedDate.day === moment().date();
+
+    if (!money || money == 0) {
+      alert("請輸入金額");
+      return false;
+    }
 
     fetch("/api/addRecord", {
       method: "POST",
@@ -86,13 +91,14 @@ const AddRecord = ({ isOpen, onClose, onRecordSubmit }: Props) => {
       .then(async (res) => {
         if (res.ok) {
           onClose();
-          onRecordSubmit("success")
+          onRecordSubmit("success");
+          setMoney("")
         } else {
-          onRecordSubmit("failed")
+          onRecordSubmit("failed");
         }
       })
       .catch((error) => {
-        onRecordSubmit("failed")
+        onRecordSubmit("failed");
       });
   };
 
@@ -234,6 +240,7 @@ const AddRecord = ({ isOpen, onClose, onRecordSubmit }: Props) => {
                   className={styles.moneyInput}
                   value={money}
                   onChange={handleMoneyChange}
+                  placeholder="请输入金额"
                 />
               </div>
               <div className={styles.tags}>

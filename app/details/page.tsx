@@ -22,7 +22,7 @@ export default function name() {
   const [successAlert, setSuccessAlertOpen] = useState(false);
   const [failedAlert, setFailedAlertOpen] = useState(false);
 
-  const user = useSelector((state: RootState) => state.user);
+  // const user = useSelector((state: RootState) => state.user);
   const items = [1, 2, 3, 4, 5, 6, 4, 8];
 
   const openTimePickerModal = () => setTimePickerModalOpen(true);

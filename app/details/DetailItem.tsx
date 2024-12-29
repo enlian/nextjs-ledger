@@ -9,7 +9,7 @@ interface item {
   money: number;
 }
 
-const DetailItem = () => {
+const DetailItem = ({data:{}}) => {
   const items: item[] = [
     {
       tag: "购物",

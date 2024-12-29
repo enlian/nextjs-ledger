@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Virtuoso } from "react-virtuoso";
 import DetailItem from "./DetailItem";
 import MonthPicker from "./MonthPicker";
@@ -21,9 +21,9 @@ export default function name() {
   const [currentMonth, setMonth] = useState(moment().month() + 1);
   const [successAlert, setSuccessAlertOpen] = useState(false);
   const [failedAlert, setFailedAlertOpen] = useState(false);
+  const [listData, setListData] = useState([]);
 
   // const user = useSelector((state: RootState) => state.user);
-  const items = [1, 2, 3, 4, 5, 6, 4, 8];
 
   const openTimePickerModal = () => setTimePickerModalOpen(true);
   const closeTimePickerModal = () => setTimePickerModalOpen(false);
@@ -42,6 +42,25 @@ export default function name() {
       setFailedAlertOpen(true);
     }
   };
+
+  const getData = () => {
+    fetch("/api/getRecords")
+      .then(async (response) => {
+        if (response.ok) {
+          const data = await response.json();
+          setListData(data.data);
+        } else {
+          throw new Error("error");
+        }
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <div className={styles.detailPage}>
@@ -87,8 +106,8 @@ export default function name() {
         currentMonth={currentMonth}
       />
       <Virtuoso
-        totalCount={items.length}
-        itemContent={(index) => <DetailItem />}
+        totalCount={listData.length}
+        itemContent={(index) => <DetailItem data={listData[index]} />}
         style={{ height: "100%", width: "100%" }}
       />
       <MonthModal

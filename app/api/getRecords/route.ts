@@ -4,6 +4,7 @@ import { query } from "./../../libs/db.js";
 export async function GET() {
   return query(`select * from records`)
     .then((res) => {
+        console.log(res.rows);
       return NextResponse.json({ status: "success", data: res.rows });
     })
     .catch((error) => {

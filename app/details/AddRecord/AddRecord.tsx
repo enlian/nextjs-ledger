@@ -12,7 +12,7 @@ import { IoChevronBack } from "react-icons/io5";
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  onRecordSubmit: () => void;
+  onRecordSubmit: (msg:string) => void;
 }
 
 interface Months {
@@ -85,14 +85,14 @@ const AddRecord = ({ isOpen, onClose, onRecordSubmit }: Props) => {
     })
       .then(async (res) => {
         if (res.ok) {
-          alert("记录添加成功");
           onClose();
+          onRecordSubmit("success")
         } else {
-          alert("记录添加失败");
+          onRecordSubmit("failed")
         }
       })
       .catch((error) => {
-        alert("记录添加失败:" + error);
+        onRecordSubmit("failed")
       });
   };
 

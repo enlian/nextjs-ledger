@@ -4,10 +4,25 @@ import { query } from "./../../libs/db.js";
 export async function POST(request: { json: () => any }) {
   const { year, month } = await request.json();
 
-  let conditions:string[]=[];
-  let params:any[]=[];
+  let conditions: string[] = [];
+  let params: any[] = [];
 
-  return query(`select * from records`)
+  if (year) {
+    conditions.push("TO_CHAR(TO_TIMESTAMP(timestamp),'YYYY')=$1");
+    params.push(String(year));
+  }
+
+  if (month) {
+    conditions.push("TO_CHAR(TO_TIMESTAMP(timestamp),'MM')=$2");
+    params.push(String(month).padStart(2, "0"));
+  }
+
+  const whereClause =
+    conditions.length > 0 ? `where ${conditions.join(" and ")}` : "";
+
+  const sql = `select * from records ${whereClause}`;
+
+  return query(sql, params)
     .then((res) => {
       console.log(res.rows);
       return NextResponse.json({ status: "success", data: res.rows });

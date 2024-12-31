@@ -44,7 +44,16 @@ export default function name() {
   };
 
   const getData = () => {
-    fetch("/api/getRecords")
+    fetch("/api/getRecords", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            year:2024,
+            month:12
+          }),
+        })
       .then(async (response) => {
         if (response.ok) {
           const data = await response.json();

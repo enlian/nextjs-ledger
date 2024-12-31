@@ -8,12 +8,12 @@ export async function POST(request: { json: () => any }) {
   let params: any[] = [];
 
   if (year) {
-    conditions.push("TO_CHAR(TO_TIMESTAMP(timestamp),'YYYY')=$1");
+    conditions.push("TO_CHAR(TO_TIMESTAMP(date),'YYYY')=$1");
     params.push(String(year));
   }
 
   if (month) {
-    conditions.push("TO_CHAR(TO_TIMESTAMP(timestamp),'MM')=$2");
+    conditions.push("TO_CHAR(TO_TIMESTAMP(date),'MM')=$2");
     params.push(String(month).padStart(2, "0"));
   }
 

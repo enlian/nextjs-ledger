@@ -1,10 +1,15 @@
 import { NextResponse } from "next/server";
 import { query } from "./../../libs/db.js";
 
-export async function GET() {
+export async function POST(request: { json: () => any }) {
+  const { year, month } = await request.json();
+
+  let conditions:string[]=[];
+  let params:any[]=[];
+
   return query(`select * from records`)
     .then((res) => {
-        console.log(res.rows);
+      console.log(res.rows);
       return NextResponse.json({ status: "success", data: res.rows });
     })
     .catch((error) => {

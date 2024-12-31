@@ -33,6 +33,7 @@ export default function name() {
   const onTimeChange = (year: number, month: number) => {
     setYear(year);
     setMonth(month);
+    setTimePickerModalOpen(false);
   };
 
   const onRecordSubmit = (msg: string) => {
@@ -45,15 +46,15 @@ export default function name() {
 
   const getData = () => {
     fetch("/api/getRecords", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            year:2024,
-            month:12
-          }),
-        })
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        year: currentYear,
+        month: currentMonth,
+      }),
+    })
       .then(async (response) => {
         if (response.ok) {
           const data = await response.json();
@@ -69,7 +70,7 @@ export default function name() {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [currentYear, currentMonth]);
 
   return (
     <div className={styles.detailPage}>

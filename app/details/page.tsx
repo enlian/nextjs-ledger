@@ -13,6 +13,7 @@ import { RootState } from "./../store/store";
 import Collapse from "@mui/material/Collapse";
 import Alert from "@mui/material/Alert";
 import { Snackbar } from "@mui/material";
+import { PiSmileySadLight } from "react-icons/pi";
 
 export default function name() {
   const [isTimePickerModalOpen, setTimePickerModalOpen] = useState(false);
@@ -123,7 +124,10 @@ export default function name() {
           style={{ height: "100%", width: "100%" }}
         />
       ) : (
-        <div>暂无数据</div>
+        <div className={styles.default}>
+          <PiSmileySadLight size={100} color="#888" />
+          <p>暂无数据，试试选择其他日期吧</p>
+        </div>
       )}
 
       <MonthModal

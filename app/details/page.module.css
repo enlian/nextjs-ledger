@@ -5,6 +5,16 @@
   position: relative;
   padding-bottom: 100px;
 }
+.default{
+  padding-top: 35%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  p{
+    text-align: center;
+    color: #888;
+  }
+}
 .add{
   position: absolute;
   right: 35px;

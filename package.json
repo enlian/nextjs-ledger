@@ -28,6 +28,7 @@
     "uuid": "^11.0.3"
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.13",
     "@types/moment": "^2.11.29",
     "@types/node": "^20",
     "@types/react": "^18",

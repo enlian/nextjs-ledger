@@ -6,7 +6,7 @@ import moment from "moment";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onTimeChange: (year: number,month: number) => void;
+  onTimeChange: (year: number, month: number) => void;
 }
 
 interface Month {
@@ -35,12 +35,15 @@ const MonthModal = ({ isOpen, onClose, onTimeChange }: ModalProps) => {
 
   for (let i = 3; i >= 0; i--) {
     const year = moment().year() - i;
-    const months = Array.from({ length: 12 }, (index, j) => ({
+    const maxMonth = year === moment().year() ? moment().month() + 1 : 12;
+    const months = Array.from({ length: maxMonth }, (index, j) => ({
       name: j + 1,
       isCurrent: j + 1 === currentMonth && year === currentYear,
     }));
     years.push({ name: year, months });
   }
+
+  console.log(years);
 
   useEffect(() => {
     if (isOpen && currentMonthRef.current) {

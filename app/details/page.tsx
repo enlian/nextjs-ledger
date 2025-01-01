@@ -8,12 +8,10 @@ import styles from "./page.module.css";
 import moment from "moment";
 import { FaRegEdit } from "react-icons/fa";
 import AddRecord from "./AddRecord/AddRecord";
-import { useSelector } from "react-redux";
-import { RootState } from "./../store/store";
-import Collapse from "@mui/material/Collapse";
 import Alert from "@mui/material/Alert";
 import { Snackbar } from "@mui/material";
 import { PiSmileySadLight } from "react-icons/pi";
+import _ from "lodash";
 
 export default function name() {
   const [isTimePickerModalOpen, setTimePickerModalOpen] = useState(false);
@@ -23,8 +21,6 @@ export default function name() {
   const [successAlert, setSuccessAlertOpen] = useState(false);
   const [failedAlert, setFailedAlertOpen] = useState(false);
   const [listData, setListData] = useState([]);
-
-  // const user = useSelector((state: RootState) => state.user);
 
   const openTimePickerModal = () => setTimePickerModalOpen(true);
   const closeTimePickerModal = () => setTimePickerModalOpen(false);
@@ -60,7 +56,17 @@ export default function name() {
       .then(async (response) => {
         if (response.ok) {
           const data = await response.json();
-          setListData(data.data);
+          const newData = Object.values(data.data.reduce((acc: { [x: string]: { items: any[]; }; },i: { date: any; }) => {
+            const date= moment.unix(Number(i.date)).format("YYYY-MM-DD");
+            if(!acc[date]){
+              acc[date] = {date:date,items:[]}
+            }
+            acc[date].items.push(i)
+            return acc
+          },{}));
+          console.log(newData);
+
+          setListData(newData);
         } else {
           throw new Error("error");
         }
@@ -117,7 +123,7 @@ export default function name() {
         currentYear={currentYear}
         currentMonth={currentMonth}
       />
-      {listData.length > 0 ? (
+      {listData &&listData.length > 0 ? (
         <Virtuoso
           totalCount={listData.length}
           itemContent={(index) => <DetailItem data={listData[index]} />}

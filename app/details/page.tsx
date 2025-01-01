@@ -39,6 +39,7 @@ export default function name() {
   const onRecordSubmit = (msg: string) => {
     if (msg === "success") {
       setSuccessAlertOpen(true);
+      getData();
     } else {
       setFailedAlertOpen(true);
     }
@@ -115,11 +116,16 @@ export default function name() {
         currentYear={currentYear}
         currentMonth={currentMonth}
       />
-      <Virtuoso
-        totalCount={listData.length}
-        itemContent={(index) => <DetailItem data={listData[index]} />}
-        style={{ height: "100%", width: "100%" }}
-      />
+      {listData.length > 0 ? (
+        <Virtuoso
+          totalCount={listData.length}
+          itemContent={(index) => <DetailItem data={listData[index]} />}
+          style={{ height: "100%", width: "100%" }}
+        />
+      ) : (
+        <div>暂无数据</div>
+      )}
+
       <MonthModal
         isOpen={isTimePickerModalOpen}
         onClose={closeTimePickerModal}

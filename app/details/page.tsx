@@ -12,7 +12,13 @@ import Alert from "@mui/material/Alert";
 import { Snackbar } from "@mui/material";
 import { PiSmileySadLight } from "react-icons/pi";
 import _ from "lodash";
-
+interface item {
+  id: number;
+  tag: string;
+  date: number;
+  type: string;
+  money: number;
+}
 export default function name() {
   const [isTimePickerModalOpen, setTimePickerModalOpen] = useState(false);
   const [isAddRecordModalOpen, setAddRecordModalOpen] = useState(false);
@@ -20,7 +26,9 @@ export default function name() {
   const [currentMonth, setMonth] = useState(moment().month() + 1);
   const [successAlert, setSuccessAlertOpen] = useState(false);
   const [failedAlert, setFailedAlertOpen] = useState(false);
-  const [listData, setListData] = useState([]);
+  const [listData, setListData] = useState<{ date: string; items: item[] }[]>(
+    []
+  );
 
   const openTimePickerModal = () => setTimePickerModalOpen(true);
   const closeTimePickerModal = () => setTimePickerModalOpen(false);
@@ -56,14 +64,22 @@ export default function name() {
       .then(async (response) => {
         if (response.ok) {
           const data = await response.json();
-          const newData = Object.values(data.data.reduce((acc: { [x: string]: { items: any[]; }; },i: { date: any; }) => {
-            const date= moment.unix(Number(i.date)).format("YYYY-MM-DD");
-            if(!acc[date]){
-              acc[date] = {date:date,items:[]}
-            }
-            acc[date].items.push(i)
-            return acc
-          },{}));
+          const newData = Object.values(
+            data.data.reduce(
+              (
+                acc: { [date: string]: { date: string; items: item[] } },
+                i: item
+              ) => {
+                const date = moment.unix(Number(i.date)).format("YYYY-MM-DD");
+                if (!acc[date]) {
+                  acc[date] = { date: date, items: [] };
+                }
+                acc[date].items.push(i);
+                return acc;
+              },
+              {}
+            )
+          ) as { date: string; items: item[] }[];
           console.log(newData);
 
           setListData(newData);
@@ -123,7 +139,7 @@ export default function name() {
         currentYear={currentYear}
         currentMonth={currentMonth}
       />
-      {listData &&listData.length > 0 ? (
+      {/* {listData && listData.length > 0 ? (
         <Virtuoso
           totalCount={listData.length}
           itemContent={(index) => <DetailItem data={listData[index]} />}
@@ -134,7 +150,7 @@ export default function name() {
           <PiSmileySadLight size={100} color="#888" />
           <p>暂无数据，试试选择其他日期吧</p>
         </div>
-      )}
+      )} */}
 
       <MonthModal
         isOpen={isTimePickerModalOpen}

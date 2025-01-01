@@ -43,8 +43,6 @@ const MonthModal = ({ isOpen, onClose, onTimeChange }: ModalProps) => {
     years.push({ name: year, months });
   }
 
-  console.log(years);
-
   useEffect(() => {
     if (isOpen && currentMonthRef.current) {
       currentMonthRef.current.scrollIntoView({

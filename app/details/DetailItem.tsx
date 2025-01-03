@@ -2,7 +2,6 @@ import { RiMoneyCnyCircleFill } from "react-icons/ri";
 import moment from "moment";
 import styles from "./DetailItem.module.css";
 import _ from "lodash";
-import { AwaitedReactNode, JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useEffect, useState } from "react";
 
 interface item {
   id: number;
@@ -12,7 +11,7 @@ interface item {
   money: number;
 }
 
-const DetailItem = ({ data = {} }) => {
+const DetailItem = ({ data = {} as { date: string; items: item[] } }) => {
   const { date, items } = data;
   return (
     <div className={styles.list}>
@@ -24,7 +23,7 @@ const DetailItem = ({ data = {} }) => {
       </div>
 
       {items &&
-        items.map((i: { id: Key | null | undefined; tag: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; date: number; type: string; money: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; }) => (
+        items.map((i) => (
           <div key={i.id} className={styles.item}>
             <RiMoneyCnyCircleFill size={50} color="rgb(88,187,124)" />
             <div className={styles.middle}>

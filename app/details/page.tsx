@@ -64,22 +64,26 @@ export default function name() {
       .then(async (response) => {
         if (response.ok) {
           const data = await response.json();
-          const newData = Object.values(
-            data.data.reduce(
-              (
-                acc: { [date: string]: { date: string; items: item[] } },
-                i: item
-              ) => {
-                const date = moment.unix(Number(i.date)).format("YYYY-MM-DD");
-                if (!acc[date]) {
-                  acc[date] = { date: date, items: [] };
-                }
-                acc[date].items.push(i);
-                return acc;
-              },
-              {}
-            )
-          ) as { date: string; items: item[] }[];
+
+          const newData: { date: string; items: item[] }[] = [];
+          const temp: string[] = [];
+
+          data.data.forEach((i: item) => {
+            const date = moment.unix(Number(i.date)).format("YYYY-MM-DD");
+            if (!temp.includes(date)) {
+              // 初始化新分组
+              const dateGroup = { date, items: [] };
+              temp.push(date);
+              newData.push(dateGroup);
+            }
+
+            // 找到对应日期的分组，并将当前 item 添加到 items 数组中
+            const group = newData.find((group) => group.date === date);
+            if (group) {
+              group.items.push(i);
+            }
+          });
+
           console.log(newData);
 
           setListData(newData);

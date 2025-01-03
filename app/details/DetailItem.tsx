@@ -11,7 +11,14 @@ interface item {
   money: number;
 }
 
-const DetailItem = ({ data = {} as { date: string; items: item[] } }) => {
+interface Props {
+  data: {
+    date: string;
+    items: item[];
+  };
+}
+
+const DetailItem = ({ data }: Props) => {
   const { date, items } = data;
   return (
     <div className={styles.list}>

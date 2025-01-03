@@ -2,6 +2,7 @@ import { RiMoneyCnyCircleFill } from "react-icons/ri";
 import moment from "moment";
 import styles from "./DetailItem.module.css";
 import _ from "lodash";
+import { useEffect, useState } from "react";
 
 interface item {
   id: number;
@@ -20,12 +21,33 @@ interface Props {
 
 const DetailItem = ({ data }: Props) => {
   const { date, items } = data;
+  const [cost, setCost] = useState(0);
+  const [income, setIncome] = useState(0);
+
+  useEffect(() => {
+    let cost = 0;
+    let income = 0;
+
+    items.map((i) => {
+      if (i.type === "支出") {
+        cost = cost + Number(i.money);
+      } else {
+        income = income + Number(i.money);
+      }
+    });
+    setCost(cost);
+    setIncome(income);
+  }, []);
+
   return (
     <div className={styles.list}>
       <div className={styles.header}>
         <div>{date}</div>
         <div className={styles.headerRight}>
-          <i>出</i>100 <i>入</i>50
+          <i>出</i>
+          {cost !== 0 ? "-" : ""}
+          {cost} <i>入</i>
+          {income}
         </div>
       </div>
 

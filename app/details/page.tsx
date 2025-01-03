@@ -65,23 +65,25 @@ export default function name() {
         if (response.ok) {
           const data = await response.json();
 
+          //最终需要的数组
           const newData: { date: string; items: item[] }[] = [];
-          const temp: string[] = [];
+          //中间件，做分组管理，快速索引
+          const dateMap: { [date: string]: { date: string; items: item[] } } =
+            {};
 
           data.data.forEach((i: item) => {
             const date = moment.unix(Number(i.date)).format("YYYY-MM-DD");
-            if (!temp.includes(date)) {
+            
+            //如果这个时间分组在缓存里不存在，说明应该新建一个时间分组
+            if (!dateMap[date]) {
               // 初始化新分组
-              const dateGroup = { date, items: [] };
-              temp.push(date);
+              const dateGroup = { date, items: [] }; //为什么items是空的，因为是新分组
+              dateMap[date] = dateGroup;
               newData.push(dateGroup);
             }
 
             // 找到对应日期的分组，并将当前 item 添加到 items 数组中
-            const group = newData.find((group) => group.date === date);
-            if (group) {
-              group.items.push(i);
-            }
+            dateMap[date].items.push(i);
           });
 
           console.log(newData);

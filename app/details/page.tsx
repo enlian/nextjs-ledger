@@ -145,7 +145,7 @@ export default function name() {
         currentYear={currentYear}
         currentMonth={currentMonth}
       />
-      {/* {listData && listData.length > 0 ? (
+      {listData && listData.length > 0 ? (
         <Virtuoso
           totalCount={listData.length}
           itemContent={(index) => <DetailItem data={listData[index]} />}
@@ -156,7 +156,7 @@ export default function name() {
           <PiSmileySadLight size={100} color="#888" />
           <p>暂无数据，试试选择其他日期吧</p>
         </div>
-      )} */}
+      )}
 
       <MonthModal
         isOpen={isTimePickerModalOpen}

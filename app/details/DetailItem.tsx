@@ -2,7 +2,7 @@ import { RiMoneyCnyCircleFill } from "react-icons/ri";
 import moment from "moment";
 import styles from "./DetailItem.module.css";
 import _ from "lodash";
-import { useEffect, useState } from "react";
+import { AwaitedReactNode, JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useEffect, useState } from "react";
 
 interface item {
   id: number;
@@ -12,8 +12,8 @@ interface item {
   money: number;
 }
 
-const DetailItem = ({ data = {} }: { data: Record<string, item[]> }) => {
-  const [date, items] = Object.entries(data)[0] || ["", []];  
+const DetailItem = ({ data = {} }) => {
+  const { date, items } = data;
   return (
     <div className={styles.list}>
       <div className={styles.header}>
@@ -23,19 +23,22 @@ const DetailItem = ({ data = {} }: { data: Record<string, item[]> }) => {
         </div>
       </div>
 
-      {items &&items.map((i) => (
-        <div key={i.id} className={styles.item}>
-          <RiMoneyCnyCircleFill size={50} color="rgb(88,187,124)" />
-          <div className={styles.middle}>
-            <p className={styles.tag}>{i.tag}</p>
-            <p className={styles.time}>{moment.unix(i.date).format("HH:mm")}</p>
+      {items &&
+        items.map((i: { id: Key | null | undefined; tag: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; date: number; type: string; money: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; }) => (
+          <div key={i.id} className={styles.item}>
+            <RiMoneyCnyCircleFill size={50} color="rgb(88,187,124)" />
+            <div className={styles.middle}>
+              <p className={styles.tag}>{i.tag}</p>
+              <p className={styles.time}>
+                {moment.unix(i.date).format("HH:mm")}
+              </p>
+            </div>
+            <div className={styles.money}>
+              {i.type === "支出" ? "-" : ""}
+              {i.money}
+            </div>
           </div>
-          <div className={styles.money}>
-            {i.type === "支出" ? "-" : ""}
-            {i.money}
-          </div>
-        </div>
-      ))}
+        ))}
     </div>
   );
 };

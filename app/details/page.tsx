@@ -12,6 +12,7 @@ import Alert from "@mui/material/Alert";
 import { Snackbar } from "@mui/material";
 import { PiSmileySadLight } from "react-icons/pi";
 import _ from "lodash";
+import CircularProgress from "@mui/material/CircularProgress";
 interface item {
   id: number;
   tag: string;
@@ -26,6 +27,7 @@ export default function name() {
   const [currentMonth, setMonth] = useState(moment().month() + 1);
   const [successAlert, setSuccessAlertOpen] = useState(false);
   const [failedAlert, setFailedAlertOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [listData, setListData] = useState<{ date: string; items: item[] }[]>(
     []
   );
@@ -36,6 +38,7 @@ export default function name() {
   const closeAddRecordModal = () => setAddRecordModalOpen(false);
 
   const onTimeChange = (year: number, month: number) => {
+    setLoading(true);
     setYear(year);
     setMonth(month);
     setTimePickerModalOpen(false);
@@ -73,7 +76,7 @@ export default function name() {
 
           data.data.forEach((i: item) => {
             const date = moment.unix(Number(i.date)).format("YYYY-MM-DD");
-            
+
             //如果这个时间分组在缓存里不存在，说明应该新建一个时间分组
             if (!dateMap[date]) {
               // 初始化新分组
@@ -95,6 +98,9 @@ export default function name() {
       })
       .catch((err) => {
         alert(err);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -145,7 +151,12 @@ export default function name() {
         currentYear={currentYear}
         currentMonth={currentMonth}
       />
-      {listData && listData.length > 0 ? (
+
+      {loading ? (
+        <div className={styles.loading}>
+          <CircularProgress />
+        </div>
+      ) : listData && listData.length > 0 ? (
         <Virtuoso
           totalCount={listData.length}
           itemContent={(index) => <DetailItem data={listData[index]} />}

@@ -51,8 +51,7 @@ const DetailItem = ({ data }: Props) => {
         </div>
       </div>
 
-      {items &&
-        items.map((i) => (
+      {items.map((i) => (
           <div key={i.id} className={styles.item}>
             <RiMoneyCnyCircleFill size={50} color="rgb(88,187,124)" />
             <div className={styles.middle}>

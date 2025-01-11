@@ -6,7 +6,10 @@
     "dev": "concurrently \"next dev\" \"start http://localhost:3000\"",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate": "npx drizzle-kit generate",
+    "push": "npx drizzle-kit push",
+    "migrate": "npm run generate && npm run push"
   },
   "dependencies": {
     "@babel/runtime": "^7.26.0",

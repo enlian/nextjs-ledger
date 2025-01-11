@@ -5,16 +5,16 @@ App Router模式，使用最新的Reduxjs Toolkit进行状态管理，此框架�
 #### **技术栈：**
 1. **前端**
    - **框架**：Next.js。
-   - **样式**：CSS Modules。
+   - **样式**：Tailwind CSS。
    - **状态管理**： Reduxjs Toolkit、react-redux
    - **图表库**：Chart.js。
 
 2. **后端**
    - **API 路由**：Next.js 内置 API。
-   - **数据库**：Postgres。
+   - **数据库**：Mysql。
 
 3. **部署**
-   - 使用 **Vercel** 部署
+   - 使用 **AWS** 部署
 
 #### **核心功能：**
 1. **收入/支出记录**
@@ -31,7 +31,7 @@ App Router模式，使用最新的Reduxjs Toolkit进行状态管理，此框架�
    - 支持时间筛选（本月、本年、自定义日期）。
 
 4. **存储**
-   - Postgres数据库
+   - Mysql数据库
 
 5. **用户界面**
    - 支持简洁明了的 UI，显示记录的列表和统计图表。

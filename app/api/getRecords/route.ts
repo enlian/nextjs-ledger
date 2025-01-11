@@ -1,40 +1,32 @@
 import { NextResponse } from "next/server";
-import { query } from "./../../libs/db.js";
+import db from "../../../db/index";
+import { records } from "../../../db/schema";
+import { and, gte, lte } from "drizzle-orm";
 
 export async function POST(request: { json: () => any }) {
-  const { year, month } = await request.json();
+  try {
+    const { year, month } = await request.json();
 
-  let conditions: string[] = [];
-  let params: any[] = [];
+    let startDate, endDate;
+    if (year && month) {
+      startDate = new Date(`${year}-${month}-01`);
+      endDate = new Date(`${year}-${month + 1}-01`);
+    } else if (year) {
+      startDate = new Date(`${year}-01-01`);
+      endDate = new Date(`${year + 1}-01-01`);
+    }
 
-  if (year) {
-    conditions.push("TO_CHAR(TO_TIMESTAMP(date),'YYYY')=$1");
-    params.push(String(year));
-  }
-
-  if (month) {
-    conditions.push("TO_CHAR(TO_TIMESTAMP(date),'MM')=$2");
-    params.push(String(month).padStart(2, "0"));
-  }
-
-  const whereClause =
-    conditions.length > 0 ? `where ${conditions.join(" and ")}` : "";
-
-  const sql = `select * from records ${whereClause}`;
-
-  return query(sql, params)
-    .then((res) => {
-      console.log(res.rows);
-      return NextResponse.json({ status: "success", data: res.rows });
-    })
-    .catch((error) => {
-      console.error("Database error:", error);
-      return NextResponse.json(
-        {
-          status: "error",
-          error: error.message,
-        },
-        { status: 500 }
+    //查询
+    const result = await db
+      .select()
+      .from(records)
+      .where(
+        startDate && endDate
+          ? and(gte(records.date, startDate), lte(records.date, endDate))
+          : undefined
       );
-    });
+    return NextResponse.json(result);
+  } catch (error) {
+    return NextResponse.json({ status: "error" }, { status: 500 });
+  }
 }

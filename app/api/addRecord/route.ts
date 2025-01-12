@@ -1,27 +1,26 @@
 import { NextResponse } from "next/server";
-import { query } from "./../../libs/db.js";
+import db from "../../../db/index";
+import { records } from "../../../db/schema";
 
 export async function POST(request: { json: () => any }) {
-  const { type, tag, date, money } = await request.json();
+  try {
+    const { type, tag, date, money } = await request.json();
+    const result = await db
+      .insert(records)
+      .values({
+        type,
+        tag,
+        date,
+        money,
+      })
+      .$returningId();
 
-  return query(
-    `insert into records (type,tag,date,money)
-  values($1,$2,$3,$4)
-  returning *;
-  `,
-    [type, tag, date, money]
-  )
-    .then((res) => {
-      return NextResponse.json({ status: "success", data: res.rows[0] });
-    })
-    .catch((error) => {
-      console.error("Database error:", error);
-      return NextResponse.json(
-        {
-          status: "error",
-          error: error.message,
-        },
-        { status: 500 }
-      );
+    return NextResponse.json({
+      status: "success",
+      data: result[0],
     });
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json({ status: "error" }, { status: 500 });
+  }
 }

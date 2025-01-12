@@ -13,7 +13,6 @@ export async function POST(request: { json: () => any }) {
         date,
         money,
       })
-      .$returningId();
 
     return NextResponse.json({
       status: "success",

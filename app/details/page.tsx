@@ -69,7 +69,7 @@ export default function name() {
       .then(async (response) => {
         if (response.ok) {
           const data = await response.json();
-
+          
           //最终需要的数组
           const newData: { date: string; items: item[] }[] = [];
           //中间件，做分组管理，快速索引
@@ -78,7 +78,7 @@ export default function name() {
           let cost = 0;
           let income = 0;
           data.data.forEach((i: item) => {
-            const date = moment.unix(Number(i.date)).format("YYYY-MM-DD");
+            const date = moment(i.date).format("YYYY-MM-DD");
             //计算总收入 总支出
             if (i.type === "支出") {
               cost = cost + Number(i.money);

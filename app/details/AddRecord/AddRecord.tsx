@@ -84,7 +84,13 @@ const AddRecord = ({ isOpen, onClose, onRecordSubmit }: Props) => {
       body: JSON.stringify({
         type: recordType,
         tag: currentTag,
-        date: isToday ? moment().unix() : moment(selectedDate).unix(),
+        date: isToday
+          ? moment().format("YYYY-MM-DD HH:mm:ss")
+          : moment({
+              year: selectedDate.year,
+              month: selectedDate.month,
+              day: selectedDate.day,
+            }).format("YYYY-MM-DD HH:mm:ss"),
         money: money,
       }),
     })

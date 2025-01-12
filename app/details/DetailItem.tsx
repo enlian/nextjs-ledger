@@ -57,7 +57,7 @@ const DetailItem = ({ data }: Props) => {
             <div className={styles.middle}>
               <p className={styles.tag}>{i.tag}</p>
               <p className={styles.time}>
-                {moment.unix(i.date).format("HH:mm")}
+                {i.date}
               </p>
             </div>
             <div className={styles.money}>

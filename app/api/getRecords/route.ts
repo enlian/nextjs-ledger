@@ -22,10 +22,13 @@ export async function POST(request: { json: () => any }) {
       .from(records)
       .where(
         startDate && endDate
-          ? and(gte(records.date, startDate), lte(records.date, endDate))
+          ? and(gte(records.date, startDate.toISOString().split('T')[0]), lte(records.date, endDate.toISOString().split('T')[0]))
           : undefined
       );
-    return NextResponse.json(result);
+    return NextResponse.json({
+      status: "success",
+      data: result,
+    });
   } catch (error) {
     return NextResponse.json({ status: "error" }, { status: 500 });
   }

@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 interface item {
   id: number;
   tag: string;
-  date: number;
+  date: string;
   type: string;
   money: number;
 }
@@ -52,20 +52,20 @@ const DetailItem = ({ data }: Props) => {
       </div>
 
       {items.map((i) => (
-          <div key={i.id} className={styles.item}>
-            <RiMoneyCnyCircleFill size={50} color="rgb(88,187,124)" />
-            <div className={styles.middle}>
-              <p className={styles.tag}>{i.tag}</p>
-              <p className={styles.time}>
-                {i.date}
-              </p>
-            </div>
-            <div className={styles.money}>
-              {i.type === "支出" ? "-" : ""}
-              {i.money}
-            </div>
+        <div key={i.id} className={styles.item}>
+          <RiMoneyCnyCircleFill size={50} color="rgb(88,187,124)" />
+          <div className={styles.middle}>
+            <p className={styles.tag}>{i.tag}</p>
+            <p className={styles.time}>
+              {i.date.includes("00:00") ? " " : moment(i.date).format("HH:mm")}
+            </p>
           </div>
-        ))}
+          <div className={styles.money}>
+            {i.type === "支出" ? "-" : ""}
+            {i.money}
+          </div>
+        </div>
+      ))}
     </div>
   );
 };

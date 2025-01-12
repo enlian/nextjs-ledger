@@ -10,7 +10,7 @@ export async function POST(request: { json: () => any }) {
     let startDate, endDate;
     if (year && month) {
       startDate = new Date(`${year}-${month}-01`);
-      endDate = new Date(`${year}-${month + 1}-01`);
+      endDate = new Date(`${year}-${month}-31`);
     } else if (year) {
       startDate = new Date(`${year}-01-01`);
       endDate = new Date(`${year + 1}-01-01`);

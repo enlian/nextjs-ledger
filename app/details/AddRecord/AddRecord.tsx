@@ -30,7 +30,11 @@ function getDays() {
   const arrs: Months[] = [];
 
   for (let year = nowYear - 2; year <= nowYear; year++) {
-    for (let month = 0; month < 12; month++) {
+    for (
+      let month = 0;
+      month < (nowYear === year ? nowMonth + 1 : 12);
+      month++
+    ) {
       const dayInMonth = moment({ year, month }).daysInMonth();
       const monthData: Months = {
         year: year,

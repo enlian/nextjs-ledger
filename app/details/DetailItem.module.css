@@ -58,6 +58,7 @@
   .time {
     color: #868686;
     font-size: small;
+    min-height: 1px;
   }
   .money {
     margin-left: auto;

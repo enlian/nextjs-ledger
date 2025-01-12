@@ -16,7 +16,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 interface item {
   id: number;
   tag: string;
-  date: number;
+  date: string;
   type: string;
   money: number;
 }
@@ -69,7 +69,7 @@ export default function name() {
       .then(async (response) => {
         if (response.ok) {
           const data = await response.json();
-          
+
           //最终需要的数组
           const newData: { date: string; items: item[] }[] = [];
           //中间件，做分组管理，快速索引
@@ -96,7 +96,6 @@ export default function name() {
             // 找到对应日期的分组，并将当前 item 添加到 items 数组中
             dateMap[date].items.push(i);
           });
-          console.log(newData);
           setCost(cost);
           setIncome(income);
           setListData(newData);
@@ -106,6 +105,9 @@ export default function name() {
       })
       .catch((err) => {
         alert(err);
+        setCost(0);
+        setIncome(0);
+        setListData([]);
       })
       .finally(() => {
         setLoading(false);

@@ -1,34 +1,8 @@
-.modalOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
+.sheetContent {
+  max-width: var(--app-width); /* 使用全局定义的宽度 */
+  margin: 0 auto;
 }
-.close {
-  position: absolute;
-  left: 6px;
-  top: 6px;
-  cursor: pointer;
-  padding: 4px;
-  background-color: rgba(255,255,255,0.3);
-}
-.modalContent {
-  background: rgb(250, 250, 250);
-  border-radius: 8px;
-  width: 369px;
-  height: 400px;
-  padding: 20px 5px 10px 20px;
-  /* padding: 20px; */
-  position: relative;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-}
+
 .modalBody {
   overflow-y: scroll;
   display: flex;
@@ -43,20 +17,19 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    align-items: center;
+    justify-content:space-between;
   }
   .month {
-    width: 80px;
     height: 30px;
     text-align: center;
     background-color: #fff;
     line-height: 30px;
-    margin-right: 10px;
-    margin-bottom: 10px;
     cursor: pointer;
     border-radius: 5px;
   }
   .isCurrentMonth {
-    background-color:var(--main-color);
+    background-color: var(--main-color);
     color: #fff;
   }
 }

@@ -9,6 +9,12 @@ export default {
   ],
   theme: {
   	extend: {
+		width:{
+			app:"var(--app-width)"
+		},
+		maxWidth:{
+			app:"var(--app-width)"
+		},
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
